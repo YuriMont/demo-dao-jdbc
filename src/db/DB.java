@@ -7,27 +7,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DB {
+    private static final String driver = "com.mysql.cj.jdbc.Driver";
+    private static final String user = "root";
+    private static final String password = "1234567";
+    private static final String url = "jdbc:mysql://localhost:3306/coursejdbc";
 
-    public static Connection conn;
-    public static final String driver = "com.mysql.jdbc.Driver";
-    public static final String user = "root";
-    public static final String password = "1234567";
-    public static final String url = "jdbc:mysql://localhost:3306/coursejdbc";
-
-    public DB() {
-        try {
+    public static Connection getConnection() {    
+            try {
             Class.forName(driver);
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException | SQLException e) {
+            return DriverManager.getConnection(url, user, password);
+            
+        } catch (ClassNotFoundException | SQLException e){
             throw new DbException(e.getMessage());
-        }
+        } 
     }
 
-    public Connection getConnection() {
-        return conn;
-    }
-
-    public static void closeConnection() {
+    public static void closeConnection(Connection conn) {
         if (conn != null) {
             try{
                 conn.close();
