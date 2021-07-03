@@ -90,7 +90,23 @@ public class SellerDaoJDBC implements SellerDao{
 
     @Override
     public void deleteById(Integer id) {
-        
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement("DELETE FROM seller WHERE id = ? ");
+            st.setInt(1, id);
+            int linhas = st.executeUpdate();
+            if(linhas> 0){
+                System.out.println("Linhas excluida com sucesso! ");
+            }
+            else{
+                throw new DbException("Erro inesperado nenhuma linha foi afetada");
+            }
+            
+        }catch(SQLException e){
+            throw new DbException("Erro: "+e.getMessage());
+        }finally{
+            DB.closeStatement(st);
+        }
     }
 
     @Override
