@@ -1,6 +1,8 @@
 
 package program;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import model.dao.DaoFactory;
@@ -10,7 +12,7 @@ import model.entities.Seller;
 
 public class Program {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         SellerDao sellerDao = DaoFactory.createSellerDao();
         
         Seller seller = sellerDao.findById(3);
@@ -31,6 +33,8 @@ public class Program {
          System.out.println("==== TEST 5: seller update ==== ");
          seller = sellerDao.findById(1);
          seller.setName("Martha Waine");
+         Date data = new SimpleDateFormat("dd/MM/yyyy").parse("23/08/1988");
+         seller.setBithDate(data);
          sellerDao.update(seller);
          
          
